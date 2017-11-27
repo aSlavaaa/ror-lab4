@@ -35,13 +35,17 @@ gem 'jbuilder', '~> 2.5'
 gem 'activeadmin'
 #
 gem 'devise'
-#
+#gem for Heroku
 gem 'pg'
-#
+#style gem
 gem 'bootstrap-sass'
-#PaperClip for avatar
-gem "paperclip", "~> 5.0.0"
+# Gem for avatar
+gem 'paperclip'
+#validation
 gem 'client_side_validations'
+#Editor
+gem 'tinymce-rails'
+#photoeditor
 gem 'carrierwave', '~> 1.0'
 
 group :development, :test do
@@ -50,7 +54,7 @@ group :development, :test do
   # Adds support for Capybara system testing and selenium driver
   gem 'capybara', '~> 2.13'
   gem 'selenium-webdriver'
-  gem 'tinymce-rails'
+  gem 'sqlite3'
 end
 
 group :development do

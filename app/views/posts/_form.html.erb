@@ -1,0 +1,8 @@
+<div style="text-align: center;"><h3><%= f.label "Title" %></h3>
+<%= f.text_field :title %><br />
+
+<h3><%= f.label "Text" %></h3>
+<%= f.text_area :body, :class => "tinymce", :rows => 40, :cols => 120 %>
+<%= tinymce %>
+
+<div style="text-align: center;"><br /><%= f.submit "Save" %></div>

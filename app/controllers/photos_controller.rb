@@ -1,34 +1,35 @@
 class PhotosController < ApplicationController
-before_action :authenticate_user!
+  before_action :authenticate_user!
+
   def index
-   @photos = Photo.all
+    @photos = Photo.all
   end
 
   def new
-   @photo = Photo.new
-  end
+    @photo = Photo.new
+   end
 
-  def create
-   params[:photo][:category_id] = params[:category_id]
-   pp @photo = current_user.photos.build(photo_params)
-   redirect_to photos_path
-  end
+   def create
+    params[:photo][:category_id] = params[:category_id]
+    params[:photo][:user_id] = current_user.id
+    @photo = Photo.create(photo_params)
+    redirect_to photos_path
+   end
 
-  def destroy
+   def edit
+   end
 
-  end
+ 
 
-  def edit
+   def update
+   end
 
-  end
+   def destroy
+   end
 
-  def upgrate
+private
 
-  end
-
- private
-
-  def photo_params
-   params.require(:photo).permit(:user_id, :category_id, :name, :photo)
- end
+   def photo_params
+    params.require(:photo).permit(:user_id, :category_id, :name, :photo)
+   end
 end

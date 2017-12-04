@@ -1,53 +1,56 @@
-class PostsController < ApplicationController
-before_action :authenticate_user!
-before_action :set_post, only: [:show, :edit, :update, :destroy]
+class PhotosController < ApplicationController
+  before_action :authenticate_user!
 
-  def show
-   @comments = Postcomment.where(post_id: @post.id)
+  def index
+    @photos = Photo.all
+    @like = {}
+    @photos.each do |photo|
+    @votes = Vote.where(photo_id: photo.id).sum(:like)
+    @like[photo.id] = @votes
+  end
+
   end
 
   def new
-  @post = Post.new
+    @photo = Photo.new
   end
-  
+
   def create
-  @post = current_user.posts.build(post_params)
-  if @post.save
-       redirect_to root_path
-      else
-          render 'new'
-  end
+   params[:photo][:category_id] = params[:category_id]
+   params[:photo][:user_id] = current_user.id
+   params[:photo][:photo] 
+   @photo = Photo.create(photo_params)
+    redirect_to photos_path
   end
 
   def edit
-
-
   end
 
-
-  def update    
-  @post.update(post_params)
-         redirect_to root_path
+  def update
   end
-
 
   def destroy
-    @post.destroy
-    redirect_to root_path
+    @photo.destroy
+    redirect_to photos_path
   end
 
+  def vote
+       pp @photo = Photo.find(params[:id])
+       pp @vote = Vote.where(user_id: current_user.id, photo_id: @photo.id).first
 
+       if @vote == nil
+           @like = 1
+           Vote.create(user_id: current_user.id, photo_id: @photo.id, like: @like)
+       else
+           @vote.destroy;
+       end
+       redirect_to photos_path
+   end
 
-  private 
+private
 
-def post_params
-    params.require(:post).permit(:user_id, :title, :body)
- end
-
-
- def set_post 
-     @post = Post.find(params[:id])
-
-end
+  def photo_params
+    params.require(:photo).permit(:user_id, :category_id, :name, :photo)
+  end
 
 end

@@ -1,9 +1,15 @@
-<p><%= link_to "Upload New Photo", new_photo_path, class: "btn btn-info btn-lg btn-block"%></center></p>
+<%= link_to "Upload photo", new_photo_path, class: "btn btn-warning btn-lg btn-block"%>
+<hr>
 <% if @photos == [] %>
- <p>Photo</p>
- <% else %>
+	<p>Photo ninchen</p>
+<% else %>
  	<% @photos.each do |photo| %>
- 		<h3 style="color: #0772A1; margin-left: 50%;"><%= photo.name %></h3>
- 	<%= image_tag(photo.photo_url) %>
- 	<% end %>
-<% end %>
+ <div style="text-align: center;">
+ 	<%= image_tag(photo.photo_url, width: 340, height: 260) %>
+ 	<p style="color: #8B0000; font-size: 18px;"><b>Category: <%= photo.category.name %></b></p>
+ 	<p style="font-size: 18px;"><b>Title: <%=photo.name %></b></p>
+ 	<p style="color: #FF8C00; font-size: 18px;"><b>Author :<%=photo.user.nickname %></b></p>
+ 	<p style="font-size: 18px;"><b><%= link_to "Like", vote_photo_path(photo.id) %>: <%= @like[photo.id]%></b></p>
+ </div>
+ 	<%end%>
+<%end%>
